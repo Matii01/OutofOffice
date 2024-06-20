@@ -5,11 +5,11 @@ using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Employees;
-using TestOutOfOfficeData.Lists.Projects;
-using TestOutOfOfficeData.Parameters;
+using OutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Parameters;
 
-namespace TestOutOfOfficeData.Extensions
+namespace OutOfOfficeData.Extensions
 {
     public static class EmployeeExtensions
     {

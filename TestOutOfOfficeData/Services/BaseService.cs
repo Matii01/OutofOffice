@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOutOfOfficeData.Services
+namespace OutOfOfficeData.Services
 {
     public abstract class BaseService
     {

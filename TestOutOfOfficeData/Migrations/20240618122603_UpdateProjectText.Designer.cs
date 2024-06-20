@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TestOutOfOfficeData;
+using OutOfOfficeData;
 
 #nullable disable
 
-namespace TestOutOfOfficeData.Migrations
+namespace OutOfOfficeData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240618122603_UpdateProjectText")]

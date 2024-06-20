@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TestOutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Employees;
 
-namespace TestOutOfOfficeData.Seeders
+namespace OutOfOfficeData.Seeders
 {
     public class EmployeeSeeder : IEntityTypeConfiguration<Employee>
     {

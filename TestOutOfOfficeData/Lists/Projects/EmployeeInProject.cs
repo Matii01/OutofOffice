@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Employees;
 
-namespace TestOutOfOfficeData.Lists.Projects
+namespace OutOfOfficeData.Lists.Projects
 {
     public class EmployeeInProject
     {

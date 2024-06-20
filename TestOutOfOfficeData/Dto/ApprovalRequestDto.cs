@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Approval_Requests;
-using TestOutOfOfficeData.Lists.Leave_Requests;
+using OutOfOfficeData.Lists.Approval_Requests;
+using OutOfOfficeData.Lists.Leave_Requests;
 
-namespace TestOutOfOfficeData.Dto
+namespace OutOfOfficeData.Dto
 {
     public record ApprovalRequestDto(
        int ID,

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Dto;
-using TestOutOfOfficeData.Extensions;
-using TestOutOfOfficeData.Helper;
-using TestOutOfOfficeData.Lists.Employees;
-using TestOutOfOfficeData.Parameters;
+using OutOfOfficeData.Dto;
+using OutOfOfficeData.Extensions;
+using OutOfOfficeData.Helper;
+using OutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Parameters;
 
-namespace TestOutOfOfficeData.Services
+namespace OutOfOfficeData.Services
 {
     public class EmployeeService : BaseService
     {

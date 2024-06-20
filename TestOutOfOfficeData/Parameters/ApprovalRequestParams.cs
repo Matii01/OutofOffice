@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Approval_Requests;
+using OutOfOfficeData.Lists.Approval_Requests;
 
-namespace TestOutOfOfficeData.Parameters
+namespace OutOfOfficeData.Parameters
 {
     public class ApprovalRequestParams
     {

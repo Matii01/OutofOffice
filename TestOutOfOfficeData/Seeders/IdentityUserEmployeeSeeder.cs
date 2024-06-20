@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Employees;
 
-namespace TestOutOfOfficeData.Seeders
+namespace OutOfOfficeData.Seeders
 {
     public class IdentityUserEmployeeSeeder : IEntityTypeConfiguration<IdentityUserEmployee>
     {

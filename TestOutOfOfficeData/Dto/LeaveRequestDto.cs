@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Leave_Requests;
+using OutOfOfficeData.Lists.Leave_Requests;
 
-namespace TestOutOfOfficeData.Dto
+namespace OutOfOfficeData.Dto
 {
     public record LeaveRequestDto(
         int ID, 

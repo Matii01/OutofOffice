@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TestOutOfOfficeData.Lists.Projects
+namespace OutOfOfficeData.Lists.Projects
 {
     public class Project
     {

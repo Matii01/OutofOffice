@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using TestOutOfOfficeData.Lists.Leave_Requests;
+using OutOfOfficeData.Lists.Leave_Requests;
 
-namespace TestOutOfOfficeData.Lists.Approval_Requests
+namespace OutOfOfficeData.Lists.Approval_Requests
 {
     public class ApprovalRequest
     {

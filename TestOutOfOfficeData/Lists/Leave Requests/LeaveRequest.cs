@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using TestOutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Employees;
 
-namespace TestOutOfOfficeData.Lists.Leave_Requests
+namespace OutOfOfficeData.Lists.Leave_Requests
 {
     public class LeaveRequest
     {

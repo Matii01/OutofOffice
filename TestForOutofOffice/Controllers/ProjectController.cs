@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using TestOutOfOfficeData;
-using TestOutOfOfficeData.Dto;
-using TestOutOfOfficeData.Lists.Projects;
-using TestOutOfOfficeData.Parameters;
-using TestOutOfOfficeData.Services;
+using OutOfOfficeData;
+using OutOfOfficeData.Dto;
+using OutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Parameters;
+using OutOfOfficeData.Services;
 
-namespace TestForOutofOffice.Controllers
+namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]

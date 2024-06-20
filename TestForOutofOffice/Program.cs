@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TestForOutofOffice;
-using TestOutOfOfficeData;
+using OutofOffice;
+using OutOfOfficeData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 
-//app.MapIdentityApi<IdentityUser>();
 
 app.UseHttpsRedirection();
 

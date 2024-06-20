@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
-namespace TestOutOfOfficeData.Seeders
+namespace OutOfOfficeData.Seeders
 {
     public class RoleSeeder : IEntityTypeConfiguration<IdentityRole>
     {

@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TestOutOfOfficeData;
-using TestOutOfOfficeData.Services;
+using OutOfOfficeData;
+using OutOfOfficeData.Services;
 
-namespace TestForOutofOffice
+namespace OutofOffice
 {
     public static class ServiceExtensions
     {

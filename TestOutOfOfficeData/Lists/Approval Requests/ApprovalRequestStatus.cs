@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOutOfOfficeData.Lists.Approval_Requests
+namespace OutOfOfficeData.Lists.Approval_Requests
 {
     public enum ApprovalRequestStatus
     {

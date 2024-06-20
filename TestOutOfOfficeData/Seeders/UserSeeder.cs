@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using TestOutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Employees;
 
 
-namespace TestOutOfOfficeData.Seeders
+namespace OutOfOfficeData.Seeders
 {
     public class UserSeeder : IEntityTypeConfiguration<ApplicationUser>
     {

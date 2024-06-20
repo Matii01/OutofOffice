@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TestOutOfOfficeData.Lists.Approval_Requests;
-using TestOutOfOfficeData.Lists.Employees;
-using TestOutOfOfficeData.Lists.Leave_Requests;
-using TestOutOfOfficeData.Lists.Projects;
-using TestOutOfOfficeData.Seeders;
+using OutOfOfficeData.Lists.Approval_Requests;
+using OutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Leave_Requests;
+using OutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Seeders;
 
 
-namespace TestOutOfOfficeData
+namespace OutOfOfficeData
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

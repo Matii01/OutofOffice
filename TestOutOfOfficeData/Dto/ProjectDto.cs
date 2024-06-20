@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Lists.Projects;
 
-namespace TestOutOfOfficeData.Dto
+namespace OutOfOfficeData.Dto
 {
     public record ProjectDto(
         int ID,

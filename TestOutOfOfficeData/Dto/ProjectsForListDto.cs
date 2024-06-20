@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Lists.Projects;
 
-namespace TestOutOfOfficeData.Dto
+namespace OutOfOfficeData.Dto
 {
     public record ProjectsForListDto(
         int ID, 

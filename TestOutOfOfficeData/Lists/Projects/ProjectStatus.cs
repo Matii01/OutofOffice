@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestOutOfOfficeData.Lists.Projects
+namespace OutOfOfficeData.Lists.Projects
 {
     public enum ProjectStatus
     {

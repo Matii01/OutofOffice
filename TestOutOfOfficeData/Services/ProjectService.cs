@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestOutOfOfficeData.Dto;
-using TestOutOfOfficeData.Extensions;
-using TestOutOfOfficeData.Lists.Employees;
-using TestOutOfOfficeData.Lists.Projects;
-using TestOutOfOfficeData.Parameters;
+using OutOfOfficeData.Dto;
+using OutOfOfficeData.Extensions;
+using OutOfOfficeData.Lists.Employees;
+using OutOfOfficeData.Lists.Projects;
+using OutOfOfficeData.Parameters;
 
-namespace TestOutOfOfficeData.Services
+namespace OutOfOfficeData.Services
 {
     public class ProjectService : BaseService
     {

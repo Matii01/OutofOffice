@@ -5,9 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TestOutOfOfficeData;
+using OutOfOfficeData;
 
-namespace TestForOutofOffice.Controllers
+namespace OutofOffice.Controllers
 {
     public class LoginModel
     {
@@ -90,7 +90,7 @@ namespace TestForOutofOffice.Controllers
                 .Select(x => x.Status)
                 .SingleOrDefault();       
 
-            return result == TestOutOfOfficeData.Lists.Employees.EmployeesStatus.Inactive;
+            return result == OutOfOfficeData.Lists.Employees.EmployeesStatus.Inactive;
         }
     }
 }

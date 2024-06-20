@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace TestOutOfOfficeData.Migrations
+namespace OutOfOfficeData.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateLeaveRequest : Migration

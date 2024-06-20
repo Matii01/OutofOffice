@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
-using TestOutOfOfficeData;
-using TestOutOfOfficeData.Parameters;
-using TestOutOfOfficeData.Services;
+using OutOfOfficeData;
+using OutOfOfficeData.Parameters;
+using OutOfOfficeData.Services;
 
-namespace TestForOutofOffice.Controllers
+namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
