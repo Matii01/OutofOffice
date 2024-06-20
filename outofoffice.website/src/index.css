@@ -1,0 +1,41 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #333;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table-container table {
+  min-width: 50px;
+}
+
+.table-container th {
+  white-space: nowrap;
+}
+
+.table-container td {
+  white-space: nowrap;
+}
+
+.th-element {
+  display: inline;
+  margin-right: 10px;
+}
+
+.th-element a {
+  cursor: pointer;
+}
