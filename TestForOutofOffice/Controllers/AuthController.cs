@@ -45,6 +45,7 @@ namespace OutofOffice.Controllers
             {
                 if(IsUserInactive(user.EmployeeId))
                 {
+                    Console.WriteLine("user inactive");
                     return Unauthorized();
                 }
             }
