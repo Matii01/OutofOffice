@@ -14,7 +14,7 @@ namespace OutofOffice
         public static void ConfigureServices(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TestOffice")));
+                options.UseSqlServer(Configuration.GetConnectionString("OutOfOffice")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
