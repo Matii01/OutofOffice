@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OutOfOfficeData;
+using OutOfOfficeData.Exceptions;
 using System.Security.Claims;
 
 namespace OutofOffice.Controllers
@@ -17,11 +18,11 @@ namespace OutofOffice.Controllers
         {
 
             var userName = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? throw new Exception("Unauthorized");
+                ?? throw new UnauthorizedException("Unauthorized");
 
             var user = await _userManager.FindByNameAsync(userName);
 
-            return user ?? throw new Exception("Unauthorized");
+            return user ?? throw new UnauthorizedException("Unauthorized");
         }
     }
 }

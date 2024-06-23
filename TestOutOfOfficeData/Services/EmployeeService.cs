@@ -10,6 +10,8 @@ using OutOfOfficeData.Extensions;
 using OutOfOfficeData.Helper;
 using OutOfOfficeData.Lists.Employees;
 using OutOfOfficeData.Parameters;
+using OutOfOfficeData.Exceptions;
+using OutOfOfficeData.NewFolder;
 
 namespace OutOfOfficeData.Services
 {
@@ -150,11 +152,11 @@ namespace OutOfOfficeData.Services
 
         public async Task EditEmployee(EditEmployeeDto newEmployee)
         {
-            var toUpdate = await _context.Employees.FindAsync(newEmployee.ID) ?? throw new Exception("");
+            var toUpdate = await _context.Employees.FindAsync(newEmployee.ID) ?? throw new NotFoundException("Employee not found");
 
             if(!await HrManagerIsCorrectlyAssigned(newEmployee.Position, newEmployee.PeopleParthner))
             {
-                throw new Exception("");
+                throw new BadRequestException("");
             }
 
             int oldRole = (int)toUpdate.Position;
@@ -203,7 +205,7 @@ namespace OutOfOfficeData.Services
         {
             return await _context.Users
                 .Where(x => x.EmployeeId ==  employeeId)
-                .FirstOrDefaultAsync() ?? throw new Exception("");    
+                .FirstOrDefaultAsync() ?? throw new NotFoundException("user not found");    
         }
 
         private async Task AssignRoleToUser(ApplicationUser user, EmployeePosition position)
@@ -216,8 +218,8 @@ namespace OutOfOfficeData.Services
                 _context.SaveChanges();
             }
             var role = EnumsConverter.EmployeePositionToRole(position);
-            var result = await _userManager.AddToRoleAsync(user, role);
-            _context.SaveChanges();
+            await _userManager.AddToRoleAsync(user, role);
+            await _context.SaveChangesAsync();
         }
     }
 }
