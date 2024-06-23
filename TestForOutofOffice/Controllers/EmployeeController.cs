@@ -12,14 +12,13 @@ namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseController
     {
         private EmployeeService _employeeService;
-        private readonly UserManager<ApplicationUser> _userManager;
         public EmployeeController(EmployeeService employeeService, UserManager<ApplicationUser> userManager)
+            : base(userManager)
         {
             _employeeService = employeeService;
-            _userManager = userManager;
         }
 
         [Authorize(Roles = "HRManager,ProjectManager,Administrator")]
@@ -95,17 +94,6 @@ namespace OutofOffice.Controllers
         {
             await _employeeService.EditEmployee(employee);
             return Ok(employee);
-        }
-
-        private async Task<ApplicationUser> GetUserByClaims(ClaimsPrincipal currentUser)
-        {
-
-            var userName = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? throw new Exception("Unauthorized");
-
-            var user = await _userManager.FindByNameAsync(userName);
-
-            return user ?? throw new Exception("Unauthorized");
         }
     }
 }

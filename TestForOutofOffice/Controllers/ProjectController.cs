@@ -13,15 +13,14 @@ namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectController : ControllerBase
+    public class ProjectController : BaseController
     {
         private readonly ProjectService _projectService;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public ProjectController(ProjectService projectService, UserManager<ApplicationUser> userManager)
+            : base(userManager) 
         {
             _projectService = projectService;
-            _userManager = userManager;
         }
 
         [Authorize]
@@ -76,11 +75,9 @@ namespace OutofOffice.Controllers
             if (roles.Contains("ProjectManager")) 
             {
                 await _projectService.CreateProject(newProject, user.EmployeeId);
-                //Console.WriteLine("ProjectManager");
             }
             else
             {
-                //Console.WriteLine("Admin");
                 await _projectService.CreateProject(newProject, null);
             }
 
@@ -119,17 +116,6 @@ namespace OutofOffice.Controllers
             await _projectService.RemoveEmployeeFromProject(employeeId, projectId);
 
             return NoContent();
-        }
-
-        private async Task<ApplicationUser> GetUserByClaims(ClaimsPrincipal currentUser)
-        {
-
-            var userName = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value 
-                ?? throw new Exception("Unauthorized");
-
-            var user = await _userManager.FindByNameAsync(userName);
-
-            return user ?? throw new Exception("Unauthorized");
         }
     }
 }
