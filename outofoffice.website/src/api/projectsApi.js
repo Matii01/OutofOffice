@@ -45,7 +45,7 @@ const employeeApi = api.injectEndpoints({
     }),
     updateProject: builder.mutation({
       query: (project) => ({
-        url: `Project/updateproject/${project.id}`,
+        url: `Project/updateproject/${project.ID}`,
         method: "POST",
         body: JSON.stringify({
           projectType: project.projectType,

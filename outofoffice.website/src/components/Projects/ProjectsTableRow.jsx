@@ -1,8 +1,9 @@
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useUpdateProjectMutation } from "../../api/projectsApi";
 
-function ProjectsTableRow({ project, selectData, onProjestClick }) {
+function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
   const isAdmin = localStorage.getItem("useRoles") === "Administrator";
   const userRole = localStorage.getItem("useRoles");
   const canEdit = ["ProjectManager", "Administrator"].includes(userRole);
@@ -16,6 +17,9 @@ function ProjectsTableRow({ project, selectData, onProjestClick }) {
     status: project.status,
     text: project.text,
   });
+
+  const [updateProject] = useUpdateProjectMutation();
+
   function handleChange(event) {
     const { name, value } = event.target;
     setEdited((prev) => ({
@@ -24,7 +28,11 @@ function ProjectsTableRow({ project, selectData, onProjestClick }) {
     }));
   }
 
-  function onSaveClick() {}
+  function onSaveClick() {
+    updateProject(edited).then(() => {
+      onUpdate();
+    });
+  }
 
   return (
     <>

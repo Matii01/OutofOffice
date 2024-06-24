@@ -7,8 +7,7 @@ import { config } from "./config";
 
 function App() {
   const navigation = useNavigate();
-  const url = "https://localhost:7170";
-  const [isLogin, setIsLogin] = useState(false);
+  const [error, setError] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -17,6 +16,7 @@ function App() {
   function handleChange(event) {
     const { name, value } = event.target;
 
+    error && setError(false);
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -33,16 +33,15 @@ function App() {
       })
       .then((data) => {
         if (data.status === 200) {
-          setIsLogin(true);
           localStorage.setItem("authToken", data.data.token);
           localStorage.setItem("expiration", data.data.expiration);
           localStorage.setItem("useRoles", data.data.useRoles);
           navigation("/lists");
         }
-        console.log(data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((data) => {
+        console.log(data);
+        setError(true);
       });
   }
 
@@ -71,6 +70,11 @@ function App() {
                     name="password"
                     className="form-control"
                   />
+                  {error && (
+                    <div className="needs-validation">
+                      Invalid e-mail or password
+                    </div>
+                  )}
                 </div>
                 <button type="submit" className="btn btn-primary">
                   Login
