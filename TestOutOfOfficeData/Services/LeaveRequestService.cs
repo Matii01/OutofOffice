@@ -12,28 +12,22 @@ using OutOfOfficeData.Lists.Projects;
 using OutOfOfficeData.Parameters;
 using OutOfOfficeData.NewFolder;
 using OutOfOfficeData.Exceptions;
+using AutoMapper;
 
 namespace OutOfOfficeData.Services
 {
     public class LeaveRequestService : BaseService
     {
-        public LeaveRequestService(ApplicationDbContext context) 
-            : base(context) 
+        public LeaveRequestService(ApplicationDbContext context, IMapper mapper) 
+            : base(context, mapper) 
         {
         }
 
         public async Task<List<LeaveRequestForListDto>> GetLeaveRequests(LeaveRequestParams param)
         {
             var list = await _context.LeaveRequests.Search(_context, param)
-                .Select(x => new LeaveRequestForListDto(
-                    x.ID,
-                    x.Employee.FullName,
-                    x.AbsenceReason.ToString(),
-                    x.StartDate,
-                    x.EndDate,
-                    x.Comment,
-                    x.Status.ToString()
-                    ))
+                .Include(x => x.Employee)
+                .Select(x => _mapper.Map<LeaveRequestForListDto>(x))
                 .ToListAsync();
 
             return list;
@@ -45,29 +39,15 @@ namespace OutOfOfficeData.Services
                 .Where(x => x.ID == leaveRequestId)
                 .SingleOrDefaultAsync() ?? throw new NotFoundException("leave request not found");
 
-            var item = new LeaveRequestDto(
-                leaveRequest.ID,
-                leaveRequest.Employee.FullName,
-                leaveRequest.AbsenceReason,
-                leaveRequest.StartDate,
-                leaveRequest.EndDate,
-                leaveRequest.Comment,
-                leaveRequest.Status
-            );
+            var item = _mapper.Map<LeaveRequestDto>(leaveRequest);
 
             return item;
         }
+
         public async Task<LeaveRequest> CreateLeaveRequest(int employeeId, NewLeaveRequestDto newLeaveRequest)
         {
-            LeaveRequest leaveRequest = new()
-            {
-                EmployeeId = employeeId,
-                AbsenceReason = newLeaveRequest.AbsenceReason,
-                StartDate = newLeaveRequest.StartDate,
-                EndDate = newLeaveRequest.EndDate,
-                Comment = newLeaveRequest.Comment,
-                Status = LeaveRequestStatus.New,
-            };
+            LeaveRequest leaveRequest = _mapper
+                .Map<LeaveRequest>(newLeaveRequest, opt => opt.Items["employeeId"] = employeeId);
 
             _context.LeaveRequests.Add(leaveRequest);
             await _context.SaveChangesAsync();

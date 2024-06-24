@@ -13,7 +13,7 @@ namespace OutOfOfficeData.Dto
         DateTime StartDate,
         DateTime? EndDate,
         int ProjectManager,
-        string? Comment,
-        ProjectStatus Status
+        ProjectStatus Status,
+        string? Comment = ""
     );
 }
