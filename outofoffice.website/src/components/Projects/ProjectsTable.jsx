@@ -97,6 +97,7 @@ function ProjectTable({
                 onProjestClick={onProjestClick}
                 key={it.id}
                 project={it}
+                onUpdate={onAdd}
                 selectData={forNewProjects}
               />
             ))}
