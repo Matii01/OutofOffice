@@ -12,14 +12,13 @@ namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LeaveRequestController : ControllerBase
+    public class LeaveRequestController : BaseController
     {
         private LeaveRequestService _leacveRequestService;
-        private readonly UserManager<ApplicationUser> _userManager;
         public LeaveRequestController(LeaveRequestService leacveRequestService, UserManager<ApplicationUser> userManager)
+            : base(userManager)
         {
             _leacveRequestService = leacveRequestService;
-            _userManager = userManager;
         }
 
         [Authorize]
@@ -88,17 +87,6 @@ namespace OutofOffice.Controllers
         {
             await _leacveRequestService.CancelLeaveRequest(leaveRequestId);
             return Ok("");
-        }
-
-        private async Task<ApplicationUser> GetUserByClaims(ClaimsPrincipal currentUser)
-        {
-
-            var userName = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? throw new Exception("Unauthorized");
-
-            var user = await _userManager.FindByNameAsync(userName);
-
-            return user ?? throw new Exception("Unauthorized");
         }
     }
 }

@@ -9,6 +9,7 @@ using OutOfOfficeData.Extensions;
 using OutOfOfficeData.Lists.Employees;
 using OutOfOfficeData.Lists.Projects;
 using OutOfOfficeData.Parameters;
+using OutOfOfficeData.NewFolder;
 
 namespace OutOfOfficeData.Services
 {
@@ -89,7 +90,7 @@ namespace OutOfOfficeData.Services
 
         public async Task<Project> UpdateProject(int id, NewProjectDto newProject)
         {
-            var project = await _context.Projects.FindAsync(id) ?? throw new Exception("not found");
+            var project = await _context.Projects.FindAsync(id) ?? throw new NotFoundException("project not found");
 
             project.ProjectType = newProject.ProjectType;
             project.StartDate= newProject.StartDate;
@@ -136,7 +137,7 @@ namespace OutOfOfficeData.Services
         {
             if(!await CanAssignEmployeeToProject(employeInProjectDto.EmployeeId))
             {
-                throw new Exception("not employee");
+                throw new NotFoundException("no employee with the specified id found ");
             }
 
             EmployeeInProject project = new ()
@@ -154,7 +155,7 @@ namespace OutOfOfficeData.Services
         {
             var employeeproject = await _context.EmployeeInProject
                 .Where(x=>x.EmployeeID == employeeId && x.ProjectID == projectId)
-                .SingleOrDefaultAsync() ?? throw new Exception("not found");
+                .SingleOrDefaultAsync() ?? throw new NotFoundException("not found");
 
             _context.EmployeeInProject.Remove(employeeproject);
             await _context.SaveChangesAsync();

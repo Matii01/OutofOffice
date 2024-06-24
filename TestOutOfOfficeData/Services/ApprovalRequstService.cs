@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OutOfOfficeData.Dto;
+using OutOfOfficeData.Exceptions;
 using OutOfOfficeData.Extensions;
 using OutOfOfficeData.Lists.Approval_Requests;
 using OutOfOfficeData.Lists.Leave_Requests;
+using OutOfOfficeData.NewFolder;
 using OutOfOfficeData.Parameters;
 
 namespace OutOfOfficeData.Services
@@ -54,7 +56,7 @@ namespace OutOfOfficeData.Services
                     ar.Status,
                     ar.Comment
                 ))
-                .SingleOrDefaultAsync() ?? throw new Exception("not found");
+                .SingleOrDefaultAsync() ?? throw new NotFoundException("approval request not found");
 
             return approvalRequest;
         }
@@ -65,11 +67,11 @@ namespace OutOfOfficeData.Services
                 .Include(x => x.LeaveRequestProp)
                 .ThenInclude(x => x.Employee)
                  .Where(x => x.ID == approvalRequestId)
-                 .SingleOrDefaultAsync() ?? throw new Exception("not found");
+                 .SingleOrDefaultAsync() ?? throw new NotFoundException("approval request not found");
 
             if(item.Status != ApprovalRequestStatus.New)
             {
-                throw new Exception("status error");
+                throw new BadRequestException("status error");
             }
 
             var start = item.LeaveRequestProp.StartDate;
@@ -78,7 +80,7 @@ namespace OutOfOfficeData.Services
 
             if(result > item.LeaveRequestProp.Employee.OutOfOfficeBalance)
             {
-                throw new Exception("OutOfOfficeBalance error");
+                throw new BadRequestException("OutOfOfficeBalance error");
             }
             
             item.LeaveRequestProp.Employee.OutOfOfficeBalance -= result;
@@ -93,11 +95,11 @@ namespace OutOfOfficeData.Services
         {
             var item = await _context.ApprovalRequests
                 .Where(x => x.ID == approvalRequestId)
-                .SingleOrDefaultAsync() ?? throw new Exception("not found");
+                .SingleOrDefaultAsync() ?? throw new NotFoundException("approval request not found");
 
             if (item.Status != ApprovalRequestStatus.New)
             {
-                throw new Exception("status error");
+                throw new BadRequestException("status error");
             }
 
             item.Approver = approver;

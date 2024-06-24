@@ -6,19 +6,19 @@ using System.Security.Claims;
 using OutOfOfficeData;
 using OutOfOfficeData.Parameters;
 using OutOfOfficeData.Services;
+using OutOfOfficeData.Exceptions;
 
 namespace OutofOffice.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ApprovalRequestController : ControllerBase
+    public class ApprovalRequestController : BaseController
     {
         private ApprovalRequstService _approvalRequstService;
-        private readonly UserManager<ApplicationUser> _userManager;
         public ApprovalRequestController(ApprovalRequstService approvalRequstService, UserManager<ApplicationUser>  userManager)
+            : base(userManager)
         {
             _approvalRequstService = approvalRequstService;
-            _userManager = userManager;
         }
 
         [HttpGet("forapprovalrequest")]
@@ -79,17 +79,6 @@ namespace OutofOffice.Controllers
             await _approvalRequstService.RejecctApprovalRequest(id, user.EmployeeId, comment);
 
             return Ok();
-        }
-
-        private async Task<ApplicationUser> GetUserByClaims(ClaimsPrincipal currentUser)
-        {
-
-            var userName = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? throw new Exception("Unauthorized");
-
-            var user = await _userManager.FindByNameAsync(userName);
-
-            return user ?? throw new Exception("Unauthorized");
         }
     }
 }

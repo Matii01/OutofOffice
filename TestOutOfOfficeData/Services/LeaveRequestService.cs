@@ -10,6 +10,8 @@ using OutOfOfficeData.Lists.Approval_Requests;
 using OutOfOfficeData.Lists.Leave_Requests;
 using OutOfOfficeData.Lists.Projects;
 using OutOfOfficeData.Parameters;
+using OutOfOfficeData.NewFolder;
+using OutOfOfficeData.Exceptions;
 
 namespace OutOfOfficeData.Services
 {
@@ -41,7 +43,7 @@ namespace OutOfOfficeData.Services
             var leaveRequest = await _context.LeaveRequests
                 .Include(x => x.Employee)
                 .Where(x => x.ID == leaveRequestId)
-                .SingleOrDefaultAsync() ?? throw new Exception("not found");
+                .SingleOrDefaultAsync() ?? throw new NotFoundException("leave request not found");
 
             var item = new LeaveRequestDto(
                 leaveRequest.ID,
@@ -75,11 +77,11 @@ namespace OutOfOfficeData.Services
         public async Task<LeaveRequest> SubmiteLeaveRequest(int leaveRequestId, int employeeId)
         {
             var leaveReuest = await _context.LeaveRequests.FindAsync(leaveRequestId) 
-                ?? throw new Exception("not found");
+                ?? throw new NotFoundException("leave request not found");
 
             if (leaveReuest.Status != LeaveRequestStatus.New)
             {
-                throw new Exception("was subbmited");
+                throw new BadRequestException("the request was sent");
             }
            
             ApprovalRequest approvalRequest = new()
@@ -99,7 +101,7 @@ namespace OutOfOfficeData.Services
         public async Task<LeaveRequest> CancelLeaveRequest(int leaveRequestId)
         {
             var leaveReuest = await _context.LeaveRequests.FindAsync(leaveRequestId) 
-                ?? throw new Exception("not found");
+                ?? throw new NotFoundException("leave request not found");
 
             var approvalRequest = await _context.ApprovalRequests
                 .Where(x => x.LeaverRequest == leaveRequestId)
