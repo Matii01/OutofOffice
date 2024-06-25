@@ -10,12 +10,13 @@ using OutOfOfficeData.Lists.Employees;
 using OutOfOfficeData.Lists.Projects;
 using OutOfOfficeData.Parameters;
 using OutOfOfficeData.NewFolder;
+using AutoMapper;
 
 namespace OutOfOfficeData.Services
 {
     public class ProjectService : BaseService
     {
-        public ProjectService(ApplicationDbContext context) : base(context)
+        public ProjectService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
 
         }
@@ -24,15 +25,7 @@ namespace OutOfOfficeData.Services
         {
             var list = await _context.Projects
                 .Search(_context, projectParams)
-                .Select(x => new ProjectsForListDto(
-                    x.ID,
-                    x.ProjectType,
-                    x.StartDate,
-                    x.EndDate,
-                    x.ProjectManager,
-                    x.Comment,
-                    x.Status
-                    ))
+                .Select(x => _mapper.Map<ProjectsForListDto>(x))
                 .ToListAsync();
 
             return list;
@@ -42,14 +35,7 @@ namespace OutOfOfficeData.Services
         {
             var project = await _context.Projects
                 .Where(x => x.ID == id)
-                .Select(x => new ProjectDto(
-                        x.ID,
-                        x.ProjectType,
-                        x.StartDate, x.EndDate,
-                        x.ProjectManager,
-                        x.Comment,
-                        x.Status
-                    ))
+                .Select(x => _mapper.Map<ProjectDto>(x))
                 .SingleOrDefaultAsync();
 
             var employee = await _context.EmployeeInProject.Where(x => x.ProjectID == id)
@@ -72,16 +58,8 @@ namespace OutOfOfficeData.Services
                 pm = projectManagerId.Value;
             }
 
-            Project project = new()
-            {
-                ProjectType = newProject.ProjectType,
-                StartDate = newProject.StartDate,
-                EndDate = newProject.EndDate,
-                ProjectManager = pm,
-                Comment = newProject.Comment,
-                Status = newProject.Status,
-            };
-
+            Project project = _mapper.Map<Project>(newProject, opts => opts.Items["ProjectManager"] = pm);
+            
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
 
@@ -93,8 +71,8 @@ namespace OutOfOfficeData.Services
             var project = await _context.Projects.FindAsync(id) ?? throw new NotFoundException("project not found");
 
             project.ProjectType = newProject.ProjectType;
-            project.StartDate= newProject.StartDate;
-            project.EndDate= newProject.EndDate;
+            project.StartDate = newProject.StartDate;
+            project.EndDate = newProject.EndDate;
             project.ProjectManager = newProject.projectManager;
             project.Comment = newProject.Comment;
             project.Status = newProject.Status;

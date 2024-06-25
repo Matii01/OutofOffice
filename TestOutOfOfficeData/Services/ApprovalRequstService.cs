@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using OutOfOfficeData.Dto;
 using OutOfOfficeData.Exceptions;
 using OutOfOfficeData.Extensions;
@@ -11,7 +12,7 @@ namespace OutOfOfficeData.Services
 {
     public class ApprovalRequstService : BaseService
     {
-        public ApprovalRequstService(ApplicationDbContext context) : base(context)
+        public ApprovalRequstService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

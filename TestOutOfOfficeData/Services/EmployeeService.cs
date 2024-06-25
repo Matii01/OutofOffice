@@ -12,6 +12,7 @@ using OutOfOfficeData.Lists.Employees;
 using OutOfOfficeData.Parameters;
 using OutOfOfficeData.Exceptions;
 using OutOfOfficeData.NewFolder;
+using AutoMapper;
 
 namespace OutOfOfficeData.Services
 {
@@ -23,7 +24,8 @@ namespace OutOfOfficeData.Services
         public EmployeeService(
             ApplicationDbContext context, 
             RoleManager<IdentityRole> roleManager, 
-            UserManager<ApplicationUser> userManager) : base(context)
+            UserManager<ApplicationUser> userManager, 
+            IMapper mapper) : base(context, mapper)
         {
             _roleManager = roleManager;
             _userManager = userManager;

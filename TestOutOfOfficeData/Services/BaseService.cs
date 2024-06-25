@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,11 @@ namespace OutOfOfficeData.Services
     public abstract class BaseService
     {
         protected ApplicationDbContext _context;
-
-        protected BaseService(ApplicationDbContext context)
+        protected readonly IMapper _mapper;
+        protected BaseService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
     }
 }
