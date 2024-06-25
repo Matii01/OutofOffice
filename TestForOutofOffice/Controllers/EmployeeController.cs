@@ -41,6 +41,7 @@ namespace OutofOffice.Controllers
             return Ok(list);
         }
 
+        [Authorize(Roles = "HRManager,ProjectManager,Administrator")]
         [HttpGet("employeeposition")]
         public async Task<IActionResult> GetEmployeeForPositionEmployee()
         {
@@ -57,6 +58,7 @@ namespace OutofOffice.Controllers
             }).ToList());
         }
 
+        [Authorize(Roles = "HRManager,ProjectManager,Administrator")]
         [HttpGet("notinprojectemployee/{projectId}")]
         public async Task<IActionResult> GetNotInThisProjectEmployee(int projectId)
         {
@@ -89,6 +91,7 @@ namespace OutofOffice.Controllers
             return Ok(employee);
         }
 
+        [Authorize(Roles = "HRManager,Administrator")]
         [HttpPost("updateemployee")]
         public async Task<IActionResult> UpdataeEmployee([FromBody] EditEmployeeDto employee)
         {

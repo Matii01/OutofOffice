@@ -11,12 +11,15 @@ namespace OutOfOfficeData.Dto
 {
     public record EmployeeForListDto(
         int ID, 
-        string FullName, 
         int Subdivision,
         int Position,
         int Status,
         int PeopleParthner, 
         int OutOfOfficeBalance, 
-        string? Photo
-    );
+        string FullName = "", 
+        string? Photo = ""
+    )
+    {
+        public bool? IsEditable { get; set; } = null;
+    }
 }

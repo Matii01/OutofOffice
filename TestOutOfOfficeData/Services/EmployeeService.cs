@@ -13,6 +13,7 @@ using OutOfOfficeData.Parameters;
 using OutOfOfficeData.Exceptions;
 using OutOfOfficeData.NewFolder;
 using AutoMapper;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace OutOfOfficeData.Services
 {
@@ -35,18 +36,10 @@ namespace OutOfOfficeData.Services
         {
             var list = await _context.Employees
                 .Search(_context, param)
-                .Select(x => new EmployeeForListDto(
-                    x.ID,
-                    x.FullName,
-                    (int)x.Subdivision,
-                    (int)x.Position,
-                    (int)x.Status,
-                    x.PeopleParthner,
-                    x.OutOfOfficeBalance,
-                    x.Photo
-                    ))
+                .Select(x => _mapper.Map<EmployeeForListDto>(x))
                 .ToListAsync();
 
+            CalculateIsEditable(list, param);
             return list;
         }
 
@@ -155,24 +148,16 @@ namespace OutOfOfficeData.Services
         public async Task EditEmployee(EditEmployeeDto newEmployee)
         {
             var toUpdate = await _context.Employees.FindAsync(newEmployee.ID) ?? throw new NotFoundException("Employee not found");
-
-            if(!await HrManagerIsCorrectlyAssigned(newEmployee.Position, newEmployee.PeopleParthner))
+ 
+            if (!await HrManagerIsCorrectlyAssigned(newEmployee.Position, newEmployee.PeopleParthner))
             {
                 throw new BadRequestException("");
             }
 
-            int oldRole = (int)toUpdate.Position;
-
-            toUpdate.FullName = newEmployee.FullName;
-            toUpdate.Subdivision = (Subdivision)newEmployee.Subdivision;
-            toUpdate.Position = (EmployeePosition)newEmployee.Position;
-            toUpdate.Status = (EmployeesStatus)newEmployee.Status;
-            toUpdate.PeopleParthner = newEmployee.PeopleParthner;
-            toUpdate.OutOfOfficeBalance = newEmployee.OutOfOfficeBalance;
-            toUpdate.Photo = newEmployee.Photo;
-
+            _mapper.Map(newEmployee, toUpdate);
             await _context.SaveChangesAsync();
 
+            int oldRole = (int)toUpdate.Position;
             if(oldRole != newEmployee.Position)
             {
                 await AssignRoleToUser(await FindUserByEmployeeId(newEmployee.ID), (EmployeePosition)newEmployee.Position);
@@ -222,6 +207,36 @@ namespace OutOfOfficeData.Services
             var role = EnumsConverter.EmployeePositionToRole(position);
             await _userManager.AddToRoleAsync(user, role);
             await _context.SaveChangesAsync();
+        }
+
+        private void CalculateIsEditable(List<EmployeeForListDto> employees, EmployeeFilterParams param)
+        {
+            foreach (var employee in employees)
+            {
+                if(employee.Position != (int)EmployeePosition.Emplyee)
+                {
+                    employee.IsEditable = false;
+                }
+                else if (param.ProjectManagerId.HasValue)
+                {
+                    employee.IsEditable = false;
+                }
+                else if (param.HrManagerId.HasValue)
+                {
+                    if (param.HrManagerId.Value == employee.PeopleParthner)
+                    {
+                        employee.IsEditable = true;
+                    }
+                    else
+                    {
+                        employee.IsEditable = false;
+                    }
+                }
+                else
+                {
+                    employee.IsEditable = true;
+                }
+            }
         }
     }
 }
