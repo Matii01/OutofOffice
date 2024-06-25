@@ -26,6 +26,8 @@ namespace OutofOffice
 
             CreateMap<NewProjectDto, Project>()
                 .AfterMap((src, dest, context) => dest.ProjectManager = context.Items["ProjectManager"] as int? ?? throw new Exception("ProjectManager is required"));
+
+            CreateMap<NewProjectDto, Project>();
         }
     }
 }
