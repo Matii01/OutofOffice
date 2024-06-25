@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OutOfOfficeData.Dto;
+using OutOfOfficeData.Lists.Employees;
 using OutOfOfficeData.Lists.Leave_Requests;
 using OutOfOfficeData.Lists.Projects;
 
@@ -26,6 +27,16 @@ namespace OutofOffice
 
             CreateMap<NewProjectDto, Project>()
                 .AfterMap((src, dest, context) => dest.ProjectManager = context.Items["ProjectManager"] as int? ?? throw new Exception("ProjectManager is required"));
+
+            CreateMap<NewProjectDto, Project>();
+
+            CreateMap<Employee, EmployeeForListDto>()
+                .ForMember(x => x.Subdivision, opt => opt.MapFrom(src => (int)src.Subdivision));
+
+            CreateMap<EditEmployeeDto, Employee>()
+                .ForMember(x => x.Subdivision, opt => opt.MapFrom(src => (Subdivision)src.Subdivision))
+                .ForMember(x => x.Position, opt => opt.MapFrom(src => (EmployeePosition)src.Position))
+                .ForMember(x => x.Status, opt => opt.MapFrom(src => (EmployeesStatus)src.Status));
         }
     }
 }

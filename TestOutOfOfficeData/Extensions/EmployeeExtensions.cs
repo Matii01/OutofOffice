@@ -15,12 +15,6 @@ namespace OutOfOfficeData.Extensions
     {
         public static IQueryable<Employee> Search(this IQueryable<Employee> employee, ApplicationDbContext context, EmployeeFilterParams param)
         {
-            if (param.HrManagerId.HasValue)
-            {
-                employee = employee
-                    .Where(x => x.Position == EmployeePosition.Emplyee)
-                    .Where(x => x.PeopleParthner ==  param.HrManagerId.Value);
-            }
             if (param.ProjectManagerId.HasValue)
             {
                 var projectsIds = context.Projects

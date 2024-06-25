@@ -69,13 +69,8 @@ namespace OutOfOfficeData.Services
         public async Task<Project> UpdateProject(int id, NewProjectDto newProject)
         {
             var project = await _context.Projects.FindAsync(id) ?? throw new NotFoundException("project not found");
-
-            project.ProjectType = newProject.ProjectType;
-            project.StartDate = newProject.StartDate;
-            project.EndDate = newProject.EndDate;
-            project.ProjectManager = newProject.projectManager;
-            project.Comment = newProject.Comment;
-            project.Status = newProject.Status;
+            
+            _mapper.Map(newProject, project);
 
             await _context.SaveChangesAsync();
             return project;
