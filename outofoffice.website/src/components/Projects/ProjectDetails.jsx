@@ -32,7 +32,11 @@ function ProjectDetails({ projectId, onClose }) {
 
   useEffect(() => {
     if (!isLoading) {
-      setFormData(data.project);
+      setFormData({
+        ...data.project,
+        ID: data.project.id,
+        comment: data.project.comment ?? " ",
+      });
     }
   }, [data]);
 
@@ -44,8 +48,18 @@ function ProjectDetails({ projectId, onClose }) {
     });
   };
 
+  function handleChangeAndConvert(event) {
+    const { name, value } = event.target;
+    const newValue = Number(value);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: newValue,
+    }));
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(edited);
     update(edited).then((data) => {
       console.log(data);
     });
@@ -84,7 +98,7 @@ function ProjectDetails({ projectId, onClose }) {
                             name="projectType"
                             value={edited.projectType}
                             aria-label="Default select example"
-                            onChange={handleChange}
+                            onChange={handleChangeAndConvert}
                             disabled={!canEdit}
                           >
                             {selectData.projectType.map((it) => (
@@ -139,7 +153,7 @@ function ProjectDetails({ projectId, onClose }) {
                               name="projectManager"
                               value={edited.projectManager}
                               aria-label="Default select example"
-                              onChange={handleChange}
+                              onChange={handleChangeAndConvert}
                               disabled={!isAdmin}
                             >
                               {selectData.pManagers.map((it) => (
@@ -159,7 +173,7 @@ function ProjectDetails({ projectId, onClose }) {
                               name="status"
                               value={edited.status}
                               aria-label="Default select example"
-                              onChange={handleChange}
+                              onChange={handleChangeAndConvert}
                               disabled={!canEdit}
                             >
                               {selectData.status.map((it) => (

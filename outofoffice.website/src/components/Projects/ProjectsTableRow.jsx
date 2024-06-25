@@ -17,18 +17,28 @@ function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
     status: project.status,
     text: project.text,
   });
-
   const [updateProject] = useUpdateProjectMutation();
 
   function handleChange(event) {
     const { name, value } = event.target;
+
     setEdited((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
+  function handleChangeAndConvert(event) {
+    const { name, value } = event.target;
+    const newValue = Number(value);
+    setEdited((prev) => ({
+      ...prev,
+      [name]: newValue,
+    }));
+  }
+
   function onSaveClick() {
+    console.log(edited);
     updateProject(edited).then(() => {
       onUpdate();
     });
@@ -44,7 +54,7 @@ function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
             name="projectType"
             value={edited.projectType}
             aria-label="Default select example"
-            onChange={handleChange}
+            onChange={handleChangeAndConvert}
             disabled={!canEdit}
           >
             {selectData.projectType.map((it) => (
@@ -80,7 +90,7 @@ function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
             name="projectManager"
             value={edited.projectManager}
             aria-label="Default select example"
-            onChange={handleChange}
+            onChange={handleChangeAndConvert}
             disabled={!isAdmin}
           >
             {selectData.pManagers.map((it) => (
@@ -96,7 +106,7 @@ function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
             name="status"
             value={edited.status}
             aria-label="Default select example"
-            onChange={handleChange}
+            onChange={handleChangeAndConvert}
             disabled={!canEdit}
           >
             {selectData.status.map((it) => (
