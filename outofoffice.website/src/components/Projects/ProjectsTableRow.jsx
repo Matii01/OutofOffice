@@ -5,8 +5,7 @@ import { useUpdateProjectMutation } from "../../api/projectsApi";
 
 function ProjectsTableRow({ project, selectData, onProjestClick, onUpdate }) {
   const isAdmin = localStorage.getItem("useRoles") === "Administrator";
-  const userRole = localStorage.getItem("useRoles");
-  const canEdit = ["ProjectManager", "Administrator"].includes(userRole);
+  const canEdit = project.isEditable;
 
   const [edited, setEdited] = useState({
     ID: project.id,
