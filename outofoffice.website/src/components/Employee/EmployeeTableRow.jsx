@@ -6,7 +6,7 @@ import { useUpdateEmployeeMutation } from "../../api/employeeApi";
 function EmployeeTableRow({ employee, selectData, showPasswordAndEmail }) {
   const isAdmin = localStorage.getItem("useRoles") === "Administrator";
   const userRole = localStorage.getItem("useRoles");
-  const canEdit = ["HRManager", "Administrator"].includes(userRole);
+  const canEdit = isAdmin === true ? isAdmin : employee.isEditable;
 
   const [edited, setEdited] = useState({
     ID: employee.id,
@@ -17,6 +17,7 @@ function EmployeeTableRow({ employee, selectData, showPasswordAndEmail }) {
     peopleParthner: employee.peopleParthner,
     outOfOfficeBalance: employee.outOfOfficeBalance,
     photo: "",
+    isEditable: false,
   });
 
   const [updateEmployee, result] = useUpdateEmployeeMutation();
