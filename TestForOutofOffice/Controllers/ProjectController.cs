@@ -91,13 +91,14 @@ namespace OutofOffice.Controllers
         {
             var user = await GetUserByClaims(User);
             var roles = await _userManager.GetRolesAsync(user);
+            bool isAdmin = false;   
 
-            if (roles.Contains("ProjectManager"))
+            if (roles.Contains("Administrator"))
             {
-                // check if pm id is the same 
+                isAdmin = true;
             }
             
-            await _projectService.UpdateProject(id, newProject);
+            await _projectService.UpdateProject(id, newProject, isAdmin);
 
             return Ok(newProject);
         }

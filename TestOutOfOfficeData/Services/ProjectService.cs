@@ -11,6 +11,7 @@ using OutOfOfficeData.Lists.Projects;
 using OutOfOfficeData.Parameters;
 using OutOfOfficeData.NewFolder;
 using AutoMapper;
+using OutOfOfficeData.Exceptions;
 
 namespace OutOfOfficeData.Services
 {
@@ -28,6 +29,8 @@ namespace OutOfOfficeData.Services
                 .Select(x => _mapper.Map<ProjectsForListDto>(x))
                 .ToListAsync();
 
+            CalculateIsEditable(list, projectParams);
+            
             return list;
         }
 
@@ -59,17 +62,25 @@ namespace OutOfOfficeData.Services
             }
 
             Project project = _mapper.Map<Project>(newProject, opts => opts.Items["ProjectManager"] = pm);
-            
+
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
 
             return project;
         }
 
-        public async Task<Project> UpdateProject(int id, NewProjectDto newProject)
+        public async Task<Project> UpdateProject(int id, NewProjectDto newProject, bool isAdmin)
         {
             var project = await _context.Projects.FindAsync(id) ?? throw new NotFoundException("project not found");
-            
+
+            if (!isAdmin) 
+            {
+                if (project.ProjectManager != newProject.projectManager) 
+                {
+                    throw new BadRequestException("You cannot edit this project");
+                }
+            }
+
             _mapper.Map(newProject, project);
 
             await _context.SaveChangesAsync();
@@ -146,6 +157,32 @@ namespace OutOfOfficeData.Services
                 return false;
             }
             return true;
+        }
+
+        private static void CalculateIsEditable(List<ProjectsForListDto> projects, ProjectParams param)
+        {
+            foreach (var project in projects)
+            {
+                if (param.ProjectManagerId.HasValue)
+                {
+                    if (project.ProjectManager == param.ProjectManagerId)
+                    {
+                        project.IsEditable = true;
+                    }
+                    else
+                    {
+                        project.IsEditable = false;
+                    }
+                }
+                else if (param.HrManagerId.HasValue || param.EmployeeId.HasValue)
+                {
+                    project.IsEditable = false;
+                }
+                else
+                {
+                    project.IsEditable = true;
+                }
+            }
         }
     }
 }

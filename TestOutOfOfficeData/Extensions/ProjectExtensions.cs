@@ -15,10 +15,6 @@ namespace OutOfOfficeData.Extensions
         public static IQueryable<Project> Search(this IQueryable<Project> projects,
            ApplicationDbContext context, ProjectParams param)
         {
-            if (param.ProjectManagerId.HasValue)
-            {
-                projects = projects.Where(x => x.ProjectManager == param.ProjectManagerId);
-            }
             if (param.HrManagerId.HasValue)
             {
                 var emploee = context.Employees.Where(x => x.PeopleParthner == param.HrManagerId)
@@ -29,8 +25,6 @@ namespace OutOfOfficeData.Extensions
                     .Where(x => emploee.Contains(x.EmployeeID))
                     .Select(x => x.Project)
                     .Distinct();
-
-                //projects = projects
             }
             if (param.EmployeeId.HasValue)
             {

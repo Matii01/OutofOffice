@@ -16,5 +16,8 @@ namespace OutOfOfficeData.Dto
         int ProjectManager, 
         ProjectStatus Status,
         string? Text = "" 
-    );
+    )
+    {
+        public bool? IsEditable { get; set; } = null;
+    }
 }
